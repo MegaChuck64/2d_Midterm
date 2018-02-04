@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/cjsco/Desktop/2D_Midterm/2d_Midterm/2d_midterm/Content/Textures/background.png</File>
+    <File>C:/Users/cjsco/Desktop/2D_Midterm/2d_Midterm/2d_midterm/Content/Fonts/Terminal.spritefont</File>
+    <File>C:/Users/cjsco/Desktop/2D_Midterm/2d_Midterm/2d_midterm/Content/Textures/spritesheet.png</File>
+  </SourceFiles>
+</SourceFileCollection>

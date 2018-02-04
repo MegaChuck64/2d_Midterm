@@ -12,6 +12,21 @@ namespace _2d_midterm
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D titleScreen;
+        Texture2D playerTexture;
+        SpriteFont fnt;
+
+        int timeLeft = 60000;
+
+        enum GameState
+        {
+            TitleScreen,
+            Playing,
+            Paused,
+            GameOver
+        }
+        GameState currenState = GameState.TitleScreen;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -26,7 +41,14 @@ namespace _2d_midterm
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+         
+
+            this.IsMouseVisible = true;
+            graphics.PreferredBackBufferWidth = 640;
+            graphics.PreferredBackBufferHeight = 640;
+            graphics.ApplyChanges();
+
+            //Player.Initialize(playerTexture, new Rectangle(0, 0, 32, 32), 2, new Vector2(200, 200));
 
             base.Initialize();
         }
@@ -40,7 +62,10 @@ namespace _2d_midterm
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            titleScreen = Content.Load<Texture2D>(@"Textures/background");
+            fnt = Content.Load<SpriteFont>(@"Fonts/Terminal");
+
+            playerTexture = Content.Load<Texture2D>(@"Textures/spritesheet");
         }
 
         /// <summary>
@@ -62,7 +87,38 @@ namespace _2d_midterm
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            KeyboardState ks = Keyboard.GetState();
+
+            switch (currenState)
+            {
+                case GameState.TitleScreen:
+                    if (ks.IsKeyDown(Keys.Enter))
+                    {
+                        Player.Initialize(playerTexture,new Rectangle(0, 0, 32, 32),2, new Vector2(200,400), 3);
+
+                        currenState = GameState.Playing;
+                    }
+                    break;
+                case GameState.Playing:
+
+                    timeLeft -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (timeLeft < 0)
+                    {
+                        currenState = GameState.GameOver;
+                    }
+                    Player.Update(gameTime);
+                    break;
+                case GameState.Paused:
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
+            }
+
+
+
+           
 
             base.Update(gameTime);
         }
@@ -75,7 +131,36 @@ namespace _2d_midterm
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            switch (currenState)
+            {
+                case GameState.TitleScreen:
+                    spriteBatch.Draw(titleScreen, new Rectangle(0, 0, titleScreen.Width, titleScreen.Height), Color.White);
+                    spriteBatch.DrawString(fnt, "Press Enter To Start.", new Vector2(200, 200), Color.Yellow);   
+                    break;
+                case GameState.Playing:
+
+                    spriteBatch.Draw(titleScreen, new Rectangle(0, 0, titleScreen.Width, titleScreen.Height), Color.Green);
+                    //spriteBatch.DrawString(fnt, "Game Has Started.", new Vector2(200, 200), Color.Yellow);
+                    spriteBatch.DrawString(fnt, (timeLeft/1000).ToString(), new Vector2(200, 200), Color.Yellow);
+
+
+                    Player.Draw(spriteBatch);
+
+                    break;
+                case GameState.Paused:
+                    break;
+                case GameState.GameOver:
+                    spriteBatch.Draw(titleScreen, new Rectangle(0, 0, titleScreen.Width, titleScreen.Height), Color.White);
+                    spriteBatch.DrawString(fnt, "Game Over.", new Vector2(200, 200), Color.Yellow);
+                    spriteBatch.DrawString(fnt, "Score: " + Player.score.ToString(), new Vector2(200, 400), Color.YellowGreen);
+                    break;
+                default:
+                    break;
+            }
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

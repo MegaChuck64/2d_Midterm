@@ -76,7 +76,7 @@ namespace _2d_midterm
         int duration,               // life of the particle
         Color initialColor,         // starting color
         Color finalColor)           // ending color
-            : base(location, texture, initialFrame, velocity)   //call construct for Sprite(base)
+            : base(location, texture, initialFrame,1,velocity, 1)   //call construct for Sprite(base)
         {
             //Set default internal values based on passed in parameters
             //Some properties start with "this."  Why?
