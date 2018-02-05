@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/cjsco/Desktop/2D_Midterm/2d_Midterm/2d_midterm/Content/Textures/spritesheet.png</SourceFile>
-  <SourceTime>2018-02-03T22:09:14.8047368-05:00</SourceTime>
+  <SourceTime>2018-02-04T17:57:20.6982465-05:00</SourceTime>
   <DestFile>C:/Users/cjsco/Desktop/2D_Midterm/2d_Midterm/2d_midterm/Content/bin/Windows/Textures/spritesheet.xnb</DestFile>
-  <DestTime>2018-02-03T22:09:24.0801963-05:00</DestTime>
+  <DestTime>2018-02-04T20:33:38.1430443-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T02:36:08-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

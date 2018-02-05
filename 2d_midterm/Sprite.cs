@@ -321,13 +321,13 @@ namespace _2d_midterm
             //if not expired...
             if (!Expired)
             {
-                //If the sprite is in the visible part of the world...
-                //if (Camera.ObjectIsVisible(WorldRectangle))
-                //{
+               // If the sprite is in the visible part of the world...
+                if (Camera.ObjectIsVisible(WorldRectangle))
+                {
                     //Draw the sprite using the appropriate class properties
                     spriteBatch.Draw(Texture, ScreenCenter, Source, tintColor, rotation,
                         RelativeCenter, scale, SpriteEffects.None, 0.0f);
-                //}
+                }
             }
         }
         #endregion

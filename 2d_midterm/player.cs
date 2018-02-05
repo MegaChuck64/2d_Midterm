@@ -24,8 +24,7 @@ namespace _2d_midterm
         //--------------------------------------------
 
         // Declare an area that the camera will keep the player
-       // private static Rectangle scrollArea = new Rectangle(150, 100, 500, 400);
-
+        private static Rectangle scrollArea = new Rectangle(150, 150, 300, 300);
         //---------------------------------------------------------------------------
         #region Initialization
 
@@ -153,7 +152,7 @@ namespace _2d_midterm
 
                 //------------------------------------------------------------
                 // Adjust position based on tile boundaries
-                //moveAngle = checkTileObstacles(elapsed, moveAngle);
+                moveAngle = checkTileObstacles(elapsed, moveAngle);
                 //------------------------------------------------------------
             }
 
@@ -232,74 +231,76 @@ namespace _2d_midterm
             float moveScale = playerSpeed * elapsed;
 
 
-            // if the base of the tank's screen coord is past the left scroll area AND
-            //   the angle for movement is towards the left...
-          //  if ((sprite.ScreenRectangle.X < scrollArea.X) && (moveAngle.X < 0))
-          //  {
-          //      //Adjust the camera's position to move with the tank
-          //      Camera.Move(new Vector2(moveAngle.X, 0) * moveScale);
-          //  }
+            //if the base of the tank's screen coord is past the left scroll area AND
+             //  the angle for movement is towards the left...
+            if ((sprite.ScreenRectangle.X < scrollArea.X) && (moveAngle.X < 0))
+                {
+                    //Adjust the camera's position to move with the tank
+                    Camera.Move(new Vector2(moveAngle.X, 0) * moveScale);
+                }
 
 
-          //  // if the base of the tank's screen coord is past the right scroll area AND
-          //  //   the angle for movement is towards the right...
-          ////  if ((sprite.ScreenRectangle.Right > scrollArea.Right) && (moveAngle.X > 0))
-          //  {
-          //      //Adjust the camera's position to move with the tank
-          //      Camera.Move(new Vector2(moveAngle.X, 0) * moveScale);
-          //  }
+            // if the base of the tank's screen coord is past the right scroll area AND
+            //   the angle for movement is towards the right...
+            if ((sprite.ScreenRectangle.Right > scrollArea.Right) && (moveAngle.X > 0))
+            {
+                //Adjust the camera's position to move with the tank
+                Camera.Move(new Vector2(moveAngle.X, 0) * moveScale);
+            }
 
-            // if the base of the tank's screen coord is past the top scroll area AND
-            //   the angle for movement is towards the top...
-            //if ((sprite.ScreenRectangle.Y < scrollArea.Y) && (moveAngle.Y < 0))
-            //{
-            //    //Adjust the camera's position to move with the tank
-            //    Camera.Move(new Vector2(0, moveAngle.Y) * moveScale);
-            //}
+            //if the base of the tank's screen coord is past the top scroll area AND
+              // the angle for movement is towards the top...
+            if ((sprite.ScreenRectangle.Y < scrollArea.Y) && (moveAngle.Y < 0))
+                {
+                    //Adjust the camera's position to move with the tank
+                    Camera.Move(new Vector2(0, moveAngle.Y) * moveScale);
+                }
 
-            //// if the base of the tank's screen coord is past the bottom scroll area AND
-            ////   the angle for movement is towards the bottom...
-            //if ((sprite.ScreenRectangle.Bottom > scrollArea.Bottom) && (moveAngle.Y > 0))
-            //{
-            //    //Adjust the camera's position to move with the tank
-            //    Camera.Move(new Vector2(0, moveAngle.Y) * moveScale);
-            //}
+            // if the base of the tank's screen coord is past the bottom scroll area AND
+            //   the angle for movement is towards the bottom...
+            if ((sprite.ScreenRectangle.Bottom > scrollArea.Bottom) && (moveAngle.Y > 0))
+            {
+                //Adjust the camera's position to move with the tank
+                Camera.Move(new Vector2(0, moveAngle.Y) * moveScale);
+            }
 
         }
 
 
-        // Collisions with walls
-        //Method to return a modified movement vector if there is either a vertical or
-        //  horizontal collision with a wall obstacle
+       // Collisions with walls
+       //Method to return a modified movement vector if there is either a vertical or
+       //   horizontal collision with a wall obstacle
         private static Vector2 checkTileObstacles(float elapsedTime, Vector2 moveAngle)
         {
-            //Calculate the new location just using the horizontal part of movement
+           // Calculate the new location just using the horizontal part of movement
             Vector2 newHorizontalLocation = sprite.WorldLocation +
                 (new Vector2(moveAngle.X, 0) * (playerSpeed * elapsedTime));
 
-            //Calculate the new location just using the vertical part of movement
+//            Calculate the new location just using the vertical part of movement
             Vector2 newVerticalLocation = sprite.WorldLocation +
                 (new Vector2(0, moveAngle.Y) * (playerSpeed * elapsedTime));
 
-            //Create a rectangle in the new Horizontal-only position
-            Rectangle newHorizontalRect = new Rectangle(
-                (int)newHorizontalLocation.X, (int)sprite.WorldLocation.Y,
-                sprite.FrameWidth, sprite.FrameHeight);
+  //          Create a rectangle in the new Horizontal- only position
+             Rectangle newHorizontalRect = new Rectangle(
+                 (int)newHorizontalLocation.X, (int)sprite.WorldLocation.Y,
+                 sprite.FrameWidth, sprite.FrameHeight);
 
-            //Create a rectangle in the new Vertical-only position
-            Rectangle newVerticalRect = new Rectangle(
-                (int)sprite.WorldLocation.X, (int)newVerticalLocation.Y,
-                sprite.FrameWidth, sprite.FrameHeight);
+            //Create a rectangle in the new Vertical- only position
+             Rectangle newVerticalRect = new Rectangle(
+                 (int)sprite.WorldLocation.X, (int)newVerticalLocation.Y,
+                 sprite.FrameWidth, sprite.FrameHeight);
 
-            //------------------------------------------------------------------------------
-            // Create integers to hold the pixel coordinate components
-            //  (left-most, right-most, top-most, bottom-most)
-            // In essence, we are going to be calculating the portion of the rectangle
-            // that is not connected to the original starting point's rectangle.  From there,
-            //  we will do pixel-by-pixel collision detection only for those pixels that
-            // are not in a known part of the rectangle
-            //------------------------------------------------------------------------------
-            int horizLeftPixel = 0;
+           /* ------------------------------------------------------------------------------
+             Create integers to hold the pixel coordinate components
+              (left - most, right - most, top - most, bottom - most)
+             In essence, we are going to be calculating the portion of the rectangle
+             that is not connected to the original starting point's rectangle.  From there,
+              we will do pixel - by - pixel collision detection only for those pixels that
+    
+                 are not in a known part of the rectangle
+                ------------------------------------------------------------------------------
+    */
+                int horizLeftPixel = 0;
             int horizRightPixel = 0;
             int vertTopPixel = 0;
             int vertBottomPixel = 0;
@@ -310,85 +311,85 @@ namespace _2d_midterm
             {
                 //Get the leftmost part of the new "horizontal" rectangle from above
                 horizLeftPixel = (int)newHorizontalRect.Left;
-                //for the right-most side, take the left-most side of our sprite's world position
+                //for the right-most side, take the left - most side of our sprite's world position
                 horizRightPixel = (int)sprite.WorldRectangle.Left;
             }
 
             //if we are moving right...
             if (moveAngle.X > 0)
             {
-                //the left-most side is based on the sprite's right-most side
+              //  the left-most side is based on the sprite's right-most side
                 horizLeftPixel = (int)sprite.WorldRectangle.Right;
-                //the right-most side is the right-most side of the new "horizontal"
-                // rectangle from above
+                //the right-most side is the right - most side of the new "horizontal"
+                 //rectangle from above
                 horizRightPixel = (int)newHorizontalRect.Right;
             }
 
             //if we are moving up...
             if (moveAngle.Y < 0)
             {
-                //top-most pixel to scan is the new "vertical" rectangle's top
+                //top - most pixel to scan is the new "vertical" rectangle's top
                 vertTopPixel = (int)newVerticalRect.Top;
-                //bottom-most pixel is set to the top-most pixel of the tank's world rectangle
+              //  bottom - most pixel is set to the top - most pixel of the tank's world rectangle
                 vertBottomPixel = (int)sprite.WorldRectangle.Top;
             }
 
             //fi we are moving down...
             if (moveAngle.Y > 0)
             {
-                //Top-most pixel to check is the bottom of the tank's world rectangle
+               // Top - most pixel to check is the bottom of the tank's world rectangle
                 vertTopPixel = (int)sprite.WorldRectangle.Bottom;
-                //Bottom-most pixel is the bottom of the new "vertical" rectangle
-                vertBottomPixel = (int)newVerticalRect.Bottom;
+               // Bottom - most pixel is the bottom of the new "vertical" rectangle
+                  vertBottomPixel = (int)newVerticalRect.Bottom;
             }
 
-            //if there is movement on the X-axis...
-            //if (moveAngle.X != 0)
-            //{
-            //    //loop from left-most to right-most pixel (columns)
-            //    for (int x = horizLeftPixel; x < horizRightPixel; x++)
-            //    {
-            //        //For each column, now we are going to loop thru the rows pixel-by-pixel
-            //        for (int y = 0; y < sprite.FrameHeight; y++)
-            //        {
-            //            //if the current pixel position is part of a wall...
-            //            if (TileMap.IsWallTileByPixel(new Vector2(x, newHorizontalLocation.Y + y)))
-            //            {
-            //                moveAngle.X = 0;    //no horizontal movement
-            //                break;              //break out of the inner for-loop
-            //            }
-            //        }
-            //        if (moveAngle.X == 0)
-            //        {   //if we had a collision, break out of outer for-loop
-            //            break;
-            //        }
-            //    }
-            //}
+            //if there is movement on the X - axis...
+            if (moveAngle.X != 0)
+            {
+                //loop from left-most to right-most pixel (columns)
+                for (int x = horizLeftPixel; x < horizRightPixel; x++)
+                {
+                    //For each column, now we are going to loop thru the rows pixel-by-pixel
+                    for (int y = 0; y < sprite.FrameHeight; y++)
+                    {
+                        //if the current pixel position is part of a wall...
+                        if (TileMap.IsWallTileByPixel(new Vector2(x, newHorizontalLocation.Y + y)))
+                        {
+                            moveAngle.X = 0;    //no horizontal movement
+                            break;              //break out of the inner for-loop
+                        }
+                    }
+                    if (moveAngle.X == 0)
+                    {   //if we had a collision, break out of outer for-loop
+                        break;
+                    }
+                }
+            }
 
 
             //Same thing will apply to this section as above, except we will
-            // be focusing only on the vertical movement portion
-            //if (moveAngle.Y != 0)
-            //{
-            //    for (int y = vertTopPixel; y < vertBottomPixel; y++)
-            //    {
-            //        for (int x = 0; x < sprite.FrameWidth; x++)
-            //        {
-            //            if (TileMap.IsWallTileByPixel(
-            //            new Vector2(newVerticalLocation.X + x, y)))
-            //            {
-            //                moveAngle.Y = 0;
-            //                break;
-            //            }
-            //        }
-            //        if (moveAngle.Y == 0)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
+             //be focusing only on the vertical movement portion
+            if (moveAngle.Y != 0)
+            {
+                for (int y = vertTopPixel; y < vertBottomPixel; y++)
+                {
+                    for (int x = 0; x < sprite.FrameWidth; x++)
+                    {
+                        if (TileMap.IsWallTileByPixel(
+                        new Vector2(newVerticalLocation.X + x, y)))
+                        {
+                            moveAngle.Y = 0;
+                            break;
+                        }
+                    }
+                    if (moveAngle.Y == 0)
+                    {
+                        break;
+                    }
+                }
+            }
 
-            //Return the possibly modified (collsion-based) movement angle
+            //Return the possibly modified (collsion - based) movement angle
             return moveAngle;
         }
 
@@ -416,7 +417,7 @@ namespace _2d_midterm
             //Update the base sprite
             sprite.Update(gameTime);
 
-            //clampToWorld(); //Makes sure player stays within the world
+            clampToWorld(); //Makes sure player stays within the world
 
             //Position the turret within the center of the tank, wherever it is in the world
             //TurretSprite.WorldLocation = sprite.WorldLocation;

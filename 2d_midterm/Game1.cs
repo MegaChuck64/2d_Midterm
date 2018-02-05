@@ -13,7 +13,7 @@ namespace _2d_midterm
         SpriteBatch spriteBatch;
 
         Texture2D titleScreen;
-        Texture2D playerTexture;
+        Texture2D spriteSheet;
         SpriteFont fnt;
 
         int timeLeft = 60000;
@@ -49,6 +49,10 @@ namespace _2d_midterm
             graphics.ApplyChanges();
 
             //Player.Initialize(playerTexture, new Rectangle(0, 0, 32, 32), 2, new Vector2(200, 200));
+            Camera.WorldRectangle = new Rectangle(0, 0, 1600, 1600);
+            //Camera's Viewable area dimensions
+            Camera.ViewPortWidth = 640;
+            Camera.ViewPortHeight = 640;
 
             base.Initialize();
         }
@@ -65,7 +69,10 @@ namespace _2d_midterm
             titleScreen = Content.Load<Texture2D>(@"Textures/background");
             fnt = Content.Load<SpriteFont>(@"Fonts/Terminal");
 
-            playerTexture = Content.Load<Texture2D>(@"Textures/spritesheet");
+            spriteSheet = Content.Load<Texture2D>(@"Textures/spritesheet");
+
+            TileMap.Initialize(spriteSheet);
+
         }
 
         /// <summary>
@@ -94,7 +101,7 @@ namespace _2d_midterm
                 case GameState.TitleScreen:
                     if (ks.IsKeyDown(Keys.Enter))
                     {
-                        Player.Initialize(playerTexture,new Rectangle(0, 0, 32, 32),2, new Vector2(200,400), 3);
+                        Player.Initialize(spriteSheet,new Rectangle(0, 0, 32, 32),2, new Vector2(200,400),1);
 
                         currenState = GameState.Playing;
                     }
@@ -143,10 +150,12 @@ namespace _2d_midterm
 
                     spriteBatch.Draw(titleScreen, new Rectangle(0, 0, titleScreen.Width, titleScreen.Height), Color.Green);
                     //spriteBatch.DrawString(fnt, "Game Has Started.", new Vector2(200, 200), Color.Yellow);
-                    spriteBatch.DrawString(fnt, (timeLeft/1000).ToString(), new Vector2(200, 200), Color.Yellow);
+          
 
-
+                    TileMap.Draw(spriteBatch);
                     Player.Draw(spriteBatch);
+
+                    spriteBatch.DrawString(fnt, (timeLeft / 1000).ToString(), new Vector2(310, 40), Color.Yellow);
 
                     break;
                 case GameState.Paused:
